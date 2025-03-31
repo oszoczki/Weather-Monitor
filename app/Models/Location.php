@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Rules\CronExpression;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -27,6 +28,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Location extends Model
 {
+    use HasFactory;
+
     /**
      * A tömbben tömegesen feltölthető mezők.
      *
@@ -43,8 +46,9 @@ class Location extends Model
     ];
 
     protected $casts = [
-        'latitude'  => 'decimal:8',
-        'longitude' => 'decimal:8',
+        'latitude'     => 'float',
+        'longitude'    => 'float',
+        'show_on_home' => 'boolean',
     ];
 
     /**

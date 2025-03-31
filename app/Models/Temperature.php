@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -20,6 +21,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Temperature extends Model
 {
+    use HasFactory;
+
     /**
      * A tömbben tömegesen feltölthető mezők.
      *
@@ -36,7 +39,7 @@ class Temperature extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'temperature' => 'decimal:2',
+        'temperature' => 'float',
     ];
 
     /**
