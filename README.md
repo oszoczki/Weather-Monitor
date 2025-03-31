@@ -1,5 +1,14 @@
 # WeatherMonitor
 
+## Elérhetőségek
+
+- GitHub: [oszoczki/Weather-Monitor](https://github.com/oszoczki/Weather-Monitor)
+- Email: oszoczki@gmail.com
+- PhoneNumber: +40753149009
+- Author: Oszoczki Richárd
+
+## Részletek
+
 WeatherMonitor egy Laravel alapú időjárás-figyelő alkalmazás, amely lehetővé teszi különböző helyszínek időjárásának automatikus monitorozását és az adatok megjelenítését.
 
 ## Funkciók
@@ -54,17 +63,14 @@ A `.env` fájlban a következő változókat kell beállítani:
 - `DB_DATABASE`: Az adatbázis neve
 - `DB_USERNAME`: Az adatbázis felhasználónév
 - `DB_PASSWORD`: Az adatbázis jelszó
-- `WEATHER_API_KEY`: Az időjárás API kulcsa
 
 ## Használat
 
 ### Helyszínek kezelése
 
 A helyszíneket a webes felületen keresztül lehet kezelni. Minden helyszínhez meg kell adni:
-- Nevet
 - Országot
 - Várost
-- Koordinátákat (szélesség és hosszúság)
 - Cron kifejezést az ellenőrzés gyakoriságához
 - Megjelenítés a kezdőoldalon (igen/nem)
 
@@ -73,7 +79,7 @@ A helyszíneket a webes felületen keresztül lehet kezelni. Minden helyszínhez
 Az időjárás ellenőrzése automatikusan történik a megadott cron kifejezések alapján. Manuálisan is elindítható:
 
 ```bash
-php artisan weather:check-all
+php artisan location:check {locationId}
 ```
 
 ### Metrikák
