@@ -8,7 +8,10 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/scss/app.scss',
-                'resources/js/app.js'],
+                'resources/js/app.js',
+                'resources/js/select2-init.js',
+                'resources/js/temperature-chart.js'
+            ],
             refresh: true,
         }),
         tailwindcss(),

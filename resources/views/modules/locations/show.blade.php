@@ -1,7 +1,7 @@
-@extends('app')
+@extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto py-8">
         <div class="max-w-2xl mx-auto">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold">{{ __('locations.location_details') }}</h1>
@@ -49,23 +49,15 @@
             </div>
         </div>
 
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('temperatures.date') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('temperatures.temperature') }}</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    @foreach($location->temperatures->take(-5) as $temperature)
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $temperature->created_at }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $temperature->temperature }}&degC</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+        @if(!empty($location->temperatures))
+            <div class="mt-8">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Hőmérsékleti grafikon</h3>
+                <div class="bg-white p-4 rounded-lg border border-gray-200">
+                    <div class="h-[400px]">
+                        <canvas id="temperatureChart" data-temperatures='{{ json_encode($location->temperatures) }}'></canvas>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
 @endsection 

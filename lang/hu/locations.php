@@ -9,6 +9,7 @@ return [
     'location_details'      => 'Helyszín részletei',
     'back_to_list'          => 'Vissza a listához',
     'actions'               => 'Műveletek',
+    'show'                  => 'Megtekintés',
     'edit'                  => 'Szerkesztés',
     'delete'                => 'Törlés',
     'save'                  => 'Mentés',
@@ -19,9 +20,10 @@ return [
     // Form fields
     'country'               => 'Ország',
     'city'                  => 'Város',
-    'cron'                  => 'Cron (másodperc)',
+    'cron'                  => 'Cron kifejezés',
     'latitude'              => 'Szélesség',
     'longitude'             => 'Hosszúság',
+    'show_on_home'          => 'Megjelenítés a főoldalon',
 
     // Messages
     'created'               => 'Helyszín sikeresen létrehozva.',

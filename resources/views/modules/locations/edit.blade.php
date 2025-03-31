@@ -1,7 +1,7 @@
-@extends('app')
+@extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto py-8">
         <div class="max-w-2xl mx-auto">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold">{{ __('locations.edit_location') }}</h1>
@@ -25,20 +25,28 @@
                 @method('PUT')
                 <div class="mb-4">
                     <label for="country" class="block text-gray-700 text-sm font-bold mb-2">{{ __('locations.country') }}</label>
-                    <input type="text" name="country" id="country" value="{{ old('country', $location->country) }}"
+                    <input type="text" name="country_code" id="country_code" value="{{ old('country', $location->country_code) }}" disabled
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
 
                 <div class="mb-4">
                     <label for="city" class="block text-gray-700 text-sm font-bold mb-2">{{ __('locations.city') }}</label>
-                    <input type="text" name="city" id="city" value="{{ old('city', $location->city) }}"
+                    <input type="text" name="city" id="city" value="{{ old('city', $location->city) }}" disabled
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
 
                 <div class="mb-6">
                     <label for="cron" class="block text-gray-700 text-sm font-bold mb-2">{{ __('locations.cron') }}</label>
-                    <input type="number" name="cron" id="cron" value="{{ old('cron', $location->cron) }}"
+                    <input type="text" name="cron" id="cron" value="{{ old('cron', $location->cron) }}"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+
+                <div class="mb-4">
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="show_on_home" value="1" {{ old('show_on_home', $location->show_on_home) ? 'checked' : '' }}
+                               class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <span class="ml-2 text-sm text-gray-700">{{ __('locations.show_on_home') }}</span>
+                    </label>
                 </div>
 
                 <div class="flex items-center justify-between">
@@ -48,25 +56,6 @@
                     </button>
                 </div>
             </form>
-        </div>
-
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('temperatures.date') }}</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('temperatures.temperature') }}</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    @foreach($location->temperatures->take(-5) as $temperature)
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $temperature->created_at }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $temperature->temperature }}&degC</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
         </div>
     </div>
 @endsection 

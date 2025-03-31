@@ -1,7 +1,7 @@
-@extends('app')
+@extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto py-8">
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold">{{ __('locations.locations') }}</h1>
             <a href="{{ route('locations.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
@@ -28,6 +28,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('locations.city') }}</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('locations.country') }}</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('locations.cron') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('locations.show_on_home') }}</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('locations.actions') }}</th>
                     </tr>
                 </thead>
@@ -35,9 +36,21 @@
                     @foreach($locations as $location)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $location->city }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $location->country }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ getCountryList()[$location->country_code] }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $location->cron }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if($location->show_on_home)
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                    </svg>
+                                @else 
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                    </svg>
+                                @endif
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <a href="{{ route('locations.show', $location) }}" class="text-blue-600 hover:text-blue-900 mr-3">{{ __('locations.show') }}</a>
                                 <a href="{{ route('locations.edit', $location) }}" class="text-blue-600 hover:text-blue-900 mr-3">{{ __('locations.edit') }}</a>
                                 <form action="{{ route('locations.destroy', $location) }}" method="POST" class="inline">
                                     @csrf

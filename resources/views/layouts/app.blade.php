@@ -3,8 +3,10 @@
     <head>
         @include('components.head')
     </head>
-    <body class='flex justify-center items-center h-screen w-screen'>
-        <div class="content">
+    <body class='font-sans antialiased'>
+        @include('components.header')
+
+        <div class="content min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             @yield('content')
         </div>
     </body>
