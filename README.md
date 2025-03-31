@@ -53,6 +53,11 @@ php artisan migrate
 php artisan db:seed
 ```
 
+7. Indítsa el a fejlesztői szervert:
+```bash
+php artisan serve
+```
+
 ## Környezeti változók
 
 A `.env` fájlban a következő változókat kell beállítani:
@@ -107,45 +112,46 @@ A Prometheus metrikák a `/api/v1/metrics` végponton érhetők el. A következ�
 php artisan test
 ```
 
-### Kódstílus ellenőrzése
+## CI/CD
+
+A projekt GitHub Actions-t használ a folyamatos integrációhoz. Minden push és pull request esetén automatikusan lefutnak:
+
+- PHPStan statikus kód elemzés
+- PHPCS kód stílus ellenőrzés
+- Unit tesztek futtatása
+- Kód lefedettség mérése és jelentés
+
+A CI folyamat konfigurációja a `.github/workflows/ci.yml` fájlban található.
+
+### Release folyamat
+
+A projekt automatikusan létrehoz release-eket amikor új tag-eket pusholunk. A release folyamat a következőket végzi:
+
+1. Létrehoz egy új release-t a tag alapján
+2. Frissíti a CHANGELOG.md fájlt az új verzióval
+3. Commitolja a CHANGELOG.md változtatásokat
+
+Új release létrehozásához:
 
 ```bash
-./vendor/bin/phpcs
+git tag -a v1.0.0 -m "Release version 1.0.0"
+git push origin v1.0.0
 ```
 
-### Statikus kódelemzés
+A release folyamat konfigurációja a `.github/workflows/release.yml` fájlban található.
 
-```bash
-./vendor/bin/phpstan analyse
-```
+## Hibakezelés és naplózás
 
-## Adatbázis struktúra
+- Minden művelet naplózásra kerül a `storage/logs` könyvtárban
+- Hibák esetén a rendszer automatikusan értesíti a rendszergazdát
+- A naplófájlok napi rotációval rendelkeznek
 
-### Locations tábla
-- `id` - int, auto-increment
-- `name` - string, a helyszín neve
-- `country_code` - string(2), ISO 3166-1 alpha-2 országkód
-- `city` - string, város neve
-- `latitude` - decimal(10,8), szélességi fok
-- `longitude` - decimal(11,8), hosszúsági fok
-- `cron` - string, cron kifejezés
-- `show_on_home` - boolean, megjelenítés a kezdőoldalon
-- `created_at` - timestamp
-- `updated_at` - timestamp
+## Fejlesztés
 
-### Temperatures tábla
-- `id` - int, auto-increment
-- `location_id` - int, foreign key a locations táblára
-- `temperature` - decimal(5,2), hőmérséklet Celsius fokban
-- `created_at` - timestamp
-- `updated_at` - timestamp
-
-## Közreműködés
-
-1. Fork-olja a repository-t
-2. Hozzon létre egy új branch-et (`git checkout -b feature/amazing-feature`)
-3. Commit-olja a változtatásokat (`git commit -m 'Add some amazing feature'`)
-4. Push-olja a branch-et (`git push origin feature/amazing-feature`)
+1. Forkolja a repository-t
+2. Hozzon létre egy feature branch-et (`git checkout -b feature/amazing-feature`)
+3. Commitolja a változtatásokat (`git commit -m 'Add some amazing feature'`)
+4. Pusholja a branch-et (`git push origin feature/amazing-feature`)
 5. Nyisson egy Pull Request-et
 
 ## Licensz

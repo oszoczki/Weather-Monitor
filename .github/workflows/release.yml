@@ -1,0 +1,52 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: '0'
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Get version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ steps.get_version.outputs.VERSION }}
+        draft: false
+        prerelease: false
+
+    - name: Update CHANGELOG.md
+      run: |
+        echo "## ${{ steps.get_version.outputs.VERSION }} ($(date +'%Y-%m-%d'))" >> CHANGELOG.md
+        echo "" >> CHANGELOG.md
+        echo "### Features" >> CHANGELOG.md
+        echo "- " >> CHANGELOG.md
+        echo "" >> CHANGELOG.md
+        echo "### Bug Fixes" >> CHANGELOG.md
+        echo "- " >> CHANGELOG.md
+        echo "" >> CHANGELOG.md
+        echo "### Other Changes" >> CHANGELOG.md
+        echo "- " >> CHANGELOG.md
+        echo "" >> CHANGELOG.md
+
+    - name: Commit CHANGELOG.md
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add CHANGELOG.md
+        git commit -m "docs: update CHANGELOG.md for ${{ steps.get_version.outputs.VERSION }}"
+        git push 
